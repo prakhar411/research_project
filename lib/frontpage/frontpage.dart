@@ -13,7 +13,8 @@ class Frontpage extends StatefulWidget {
   State<Frontpage> createState() => _FrontpageState();
 }
 
-class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMixin {
+class _FrontpageState extends State<Frontpage>
+    with SingleTickerProviderStateMixin {
   Position? _currentPosition;
   bool _isFetching = false;
   bool _checkingAuth = false;
@@ -23,9 +24,13 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
 
   // Modern color scheme
   final Color _primaryColor = const Color(0xFF4A6BFF); // Vibrant blue
-  final Color _secondaryColor = const Color(0xFFFF6B6B); // Coral red for emergency
+  final Color _secondaryColor = const Color(
+    0xFFFF6B6B,
+  ); // Coral red for emergency
   final Color _accentColor = const Color(0xFF00D4AA); // Teal accent
-  final Color _backgroundColor = const Color(0xFFF8FAFF); // Light blue background
+  final Color _backgroundColor = const Color(
+    0xFFF8FAFF,
+  ); // Light blue background
   final Color _surfaceColor = Colors.white;
   final Color _textPrimary = const Color(0xFF1A1F36);
   final Color _textSecondary = const Color(0xFF6B7280);
@@ -38,41 +43,39 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
       duration: const Duration(seconds: 2),
     )..repeat(reverse: true);
 
-    _scaleAnimation = TweenSequence<double>(
-      <TweenSequenceItem<double>>[
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 1.0, end: 1.05),
-          weight: 50,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 1.05, end: 1.0),
-          weight: 50,
-        ),
-      ],
-    ).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ),
-    );
+    _scaleAnimation =
+        TweenSequence<double>(<TweenSequenceItem<double>>[
+          TweenSequenceItem<double>(
+            tween: Tween<double>(begin: 1.0, end: 1.05),
+            weight: 50,
+          ),
+          TweenSequenceItem<double>(
+            tween: Tween<double>(begin: 1.05, end: 1.0),
+            weight: 50,
+          ),
+        ]).animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeInOut,
+          ),
+        );
 
-    _pulseAnimation = TweenSequence<double>(
-      <TweenSequenceItem<double>>[
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0.5, end: 1.0),
-          weight: 50,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 1.0, end: 0.5),
-          weight: 50,
-        ),
-      ],
-    ).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ),
-    );
+    _pulseAnimation =
+        TweenSequence<double>(<TweenSequenceItem<double>>[
+          TweenSequenceItem<double>(
+            tween: Tween<double>(begin: 0.5, end: 1.0),
+            weight: 50,
+          ),
+          TweenSequenceItem<double>(
+            tween: Tween<double>(begin: 1.0, end: 0.5),
+            weight: 50,
+          ),
+        ]).animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeInOut,
+          ),
+        );
   }
 
   @override
@@ -126,7 +129,8 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
       // Fetch the current location
       Position position = await Geolocator.getCurrentPosition(
         // ignore: deprecated_member_use
-          desiredAccuracy: LocationAccuracy.high);
+        desiredAccuracy: LocationAccuracy.high,
+      );
 
       setState(() {
         _currentPosition = position;
@@ -152,14 +156,10 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
     Navigator.push(
       context,
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => DialogueBox(
-          position: _currentPosition,
-        ),
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            DialogueBox(position: _currentPosition),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return FadeTransition(
-            opacity: animation,
-            child: child,
-          );
+          return FadeTransition(opacity: animation, child: child);
         },
         transitionDuration: Duration(milliseconds: 300),
       ),
@@ -193,19 +193,24 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
         if (isValid && mounted) {
           Navigator.of(context).pushReplacement(
             PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) => const HomePage(),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                const begin = Offset(1.0, 0.0);
-                const end = Offset.zero;
-                const curve = Curves.easeInOut;
-                var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                var offsetAnimation = animation.drive(tween);
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  const HomePage(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                    const begin = Offset(1.0, 0.0);
+                    const end = Offset.zero;
+                    const curve = Curves.easeInOut;
+                    var tween = Tween(
+                      begin: begin,
+                      end: end,
+                    ).chain(CurveTween(curve: curve));
+                    var offsetAnimation = animation.drive(tween);
 
-                return SlideTransition(
-                  position: offsetAnimation,
-                  child: child,
-                );
-              },
+                    return SlideTransition(
+                      position: offsetAnimation,
+                      child: child,
+                    );
+                  },
               transitionDuration: Duration(milliseconds: 400),
             ),
           );
@@ -217,19 +222,24 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
       if (mounted) {
         Navigator.of(context).push(
           PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => SignupPage(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              const begin = Offset(1.0, 0.0);
-              const end = Offset.zero;
-              const curve = Curves.easeInOut;
-              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-              var offsetAnimation = animation.drive(tween);
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                SignupPage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+                  const begin = Offset(1.0, 0.0);
+                  const end = Offset.zero;
+                  const curve = Curves.easeInOut;
+                  var tween = Tween(
+                    begin: begin,
+                    end: end,
+                  ).chain(CurveTween(curve: curve));
+                  var offsetAnimation = animation.drive(tween);
 
-              return SlideTransition(
-                position: offsetAnimation,
-                child: child,
-              );
-            },
+                  return SlideTransition(
+                    position: offsetAnimation,
+                    child: child,
+                  );
+                },
             transitionDuration: Duration(milliseconds: 400),
           ),
         );
@@ -273,11 +283,7 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
               ),
               borderRadius: BorderRadius.circular(16),
             ),
-            child: Icon(
-              Icons.security_rounded,
-              color: Colors.white,
-              size: 28,
-            ),
+            child: Icon(Icons.security_rounded, color: Colors.white, size: 28),
           ),
           Column(
             children: [
@@ -449,12 +455,7 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
               color: _primaryColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Center(
-              child: Text(
-                icon,
-                style: TextStyle(fontSize: 24),
-              ),
-            ),
+            child: Center(child: Text(icon, style: TextStyle(fontSize: 24))),
           ),
           SizedBox(width: 16),
           Expanded(
@@ -472,10 +473,7 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
                 SizedBox(height: 4),
                 Text(
                   subtitle,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: _textSecondary,
-                  ),
+                  style: TextStyle(fontSize: 14, color: _textSecondary),
                 ),
               ],
             ),
@@ -519,9 +517,7 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
                         children: [
                           TextSpan(
                             text: "Our Priority",
-                            style: TextStyle(
-                              color: _primaryColor,
-                            ),
+                            style: TextStyle(color: _primaryColor),
                           ),
                         ],
                       ),
@@ -542,16 +538,15 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
                     SizedBox(height: 40),
 
                     // Feature cards
-                    Column(
-                      children: [
-                        _buildFeatureCard("🚨", "Emergency Response", "Get help instantly with location sharing"),
-                        SizedBox(height: 16),
-                        _buildFeatureCard("📍", "Live Tracking", "Share real-time location with trusted contacts"),
-                        SizedBox(height: 16),
-                        _buildFeatureCard("👥", "Community Alert", "Alert nearby users in emergencies"),
-                      ],
-                    ),
-
+                    // Column(
+                    //   children: [
+                    //     _buildFeatureCard("🚨", "Emergency Response", "Get help instantly with location sharing"),
+                    //     SizedBox(height: 16),
+                    //     _buildFeatureCard("📍", "Live Tracking", "Share real-time location with trusted contacts"),
+                    //     SizedBox(height: 16),
+                    //     _buildFeatureCard("👥", "Community Alert", "Alert nearby users in emergencies"),
+                    //   ],
+                    // ),
                     SizedBox(height: 40),
 
                     // Action buttons
@@ -582,32 +577,39 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
                             child: InkWell(
                               onTap: _isFetching
                                   ? null
-                                  : () => _fetchAndStoreLocation(showDialog: true),
+                                  : () => _fetchAndStoreLocation(
+                                      showDialog: true,
+                                    ),
                               borderRadius: BorderRadius.circular(20),
                               splashColor: Colors.white.withOpacity(0.2),
                               highlightColor: Colors.white.withOpacity(0.1),
                               child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 20,
+                                  horizontal: 24,
+                                ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     _isFetching
                                         ? SizedBox(
-                                      width: 24,
-                                      height: 24,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        color: Colors.white,
-                                      ),
-                                    )
+                                            width: 24,
+                                            height: 24,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                              color: Colors.white,
+                                            ),
+                                          )
                                         : Icon(
-                                      Icons.emergency_rounded,
-                                      color: Colors.white,
-                                      size: 28,
-                                    ),
+                                            Icons.emergency_rounded,
+                                            color: Colors.white,
+                                            size: 28,
+                                          ),
                                     SizedBox(width: 12),
                                     Text(
-                                      _isFetching ? "Fetching Location..." : "GET INSTANT HELP",
+                                      _isFetching
+                                          ? "Fetching Location..."
+                                          : "GET INSTANT HELP",
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w700,
@@ -643,12 +645,17 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
                             color: Colors.transparent,
                             borderRadius: BorderRadius.circular(20),
                             child: InkWell(
-                              onTap: _checkingAuth ? null : _onAuthButtonPressed,
+                              onTap: _checkingAuth
+                                  ? null
+                                  : _onAuthButtonPressed,
                               borderRadius: BorderRadius.circular(20),
                               splashColor: _primaryColor.withOpacity(0.1),
                               highlightColor: _primaryColor.withOpacity(0.05),
                               child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 20,
+                                  horizontal: 24,
+                                ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -669,7 +676,7 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
                                       ),
                                     SizedBox(width: 12),
                                     Text(
-                                      _checkingAuth ? "Checking..." : "LOGIN / SIGN UP",
+                                      _checkingAuth ? "Checking..." : "LOGIN",
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600,
@@ -712,14 +719,17 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
                                     ),
                                     child: Icon(
                                       Icons.location_searching_rounded,
-                                      color: _currentPosition != null ? _accentColor : _textSecondary,
+                                      color: _currentPosition != null
+                                          ? _accentColor
+                                          : _textSecondary,
                                       size: 20,
                                     ),
                                   ),
                                   SizedBox(width: 16),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           _currentPosition != null
@@ -735,12 +745,16 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
                                         Text(
                                           _currentPosition != null
                                               ? "${_currentPosition!.latitude.toStringAsFixed(5)}, "
-                                              "${_currentPosition!.longitude.toStringAsFixed(5)}"
+                                                    "${_currentPosition!.longitude.toStringAsFixed(5)}"
                                               : "Tap 'GET INSTANT HELP' to fetch location",
                                           style: TextStyle(
                                             fontSize: 14,
-                                            color: _currentPosition != null ? _accentColor : _textSecondary,
-                                            fontWeight: _currentPosition != null ? FontWeight.w500 : null,
+                                            color: _currentPosition != null
+                                                ? _accentColor
+                                                : _textSecondary,
+                                            fontWeight: _currentPosition != null
+                                                ? FontWeight.w500
+                                                : null,
                                           ),
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
@@ -771,10 +785,7 @@ class _FrontpageState extends State<Frontpage> with SingleTickerProviderStateMix
                         // Footer note
                         Text(
                           "In case of emergency, tap the red button above",
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: _textSecondary,
-                          ),
+                          style: TextStyle(fontSize: 13, color: _textSecondary),
                         ),
                       ],
                     ),

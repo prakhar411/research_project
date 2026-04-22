@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:research_project/frontpage/frontpage.dart';
 import 'package:research_project/onboarding/homepage.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -40,6 +41,10 @@ class MyApp extends StatelessWidget {
           // 🔹 Normal flow
           final isLoggedIn = snapshot.data ?? false;
           return isLoggedIn ? const HomePage() : const Frontpage();
+          // // return const Frontpage();
+          // // return const HomePage();
+          // return SignupPage();
+          // // return LoginPage();
         },
       ),
     );

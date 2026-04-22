@@ -15,7 +15,8 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
+class _LoginPageState extends State<LoginPage>
+    with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _emailCtrl = TextEditingController();
@@ -47,17 +48,11 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     );
 
     _slideAnimation = Tween<double>(begin: 50, end: 0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeOutCubic,
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOutCubic),
     );
 
     _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
 
     _animationController.forward();
@@ -119,7 +114,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
       final password = _passwordCtrl.text.trim();
 
       final user = users.cast<Map<String, dynamic>>().firstWhere(
-            (u) => u['email'] == email,
+        (u) => u['email'] == email,
         orElse: () => {},
       );
 
@@ -152,22 +147,23 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
       Navigator.of(context).pushAndRemoveUntil(
         PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => const HomePage(),
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const HomePage(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             const begin = Offset(1.0, 0.0);
             const end = Offset.zero;
             const curve = Curves.easeInOut;
-            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var tween = Tween(
+              begin: begin,
+              end: end,
+            ).chain(CurveTween(curve: curve));
             var offsetAnimation = animation.drive(tween);
 
-            return SlideTransition(
-              position: offsetAnimation,
-              child: child,
-            );
+            return SlideTransition(position: offsetAnimation, child: child);
           },
           transitionDuration: Duration(milliseconds: 400),
         ),
-            (route) => false,
+        (route) => false,
       );
     } catch (e) {
       if (!mounted) return;
@@ -190,18 +186,19 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   void _goToSignup() {
     Navigator.of(context).push(
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => const SignupPage(),
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const SignupPage(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           const begin = Offset(1.0, 0.0);
           const end = Offset.zero;
           const curve = Curves.easeInOut;
-          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          var tween = Tween(
+            begin: begin,
+            end: end,
+          ).chain(CurveTween(curve: curve));
           var offsetAnimation = animation.drive(tween);
 
-          return SlideTransition(
-            position: offsetAnimation,
-            child: child,
-          );
+          return SlideTransition(position: offsetAnimation, child: child);
         },
         transitionDuration: Duration(milliseconds: 400),
       ),
@@ -235,22 +232,22 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       // Back button and header
                       Row(
                         children: [
-                          Container(
-                            width: 48,
-                            height: 48,
-                            decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: IconButton(
-                              onPressed: () => Navigator.pop(context),
-                              icon: Icon(
-                                Icons.arrow_back_rounded,
-                                color: Colors.white,
-                                size: 24,
-                              ),
-                            ),
-                          ),
+                          // Container(
+                          //   width: 48,
+                          //   height: 48,
+                          //   decoration: BoxDecoration(
+                          //     color: Colors.white.withOpacity(0.1),
+                          //     borderRadius: BorderRadius.circular(12),
+                          //   ),
+                          //   // child: IconButton(
+                          //   //   onPressed: () => Navigator.pop(context),
+                          //   //   icon: Icon(
+                          //   //     Icons.arrow_back_rounded,
+                          //   //     color: Colors.white,
+                          //   //     size: 24,
+                          //   //   ),
+                          //   // ),
+                          // ),
                           Spacer(),
                           Container(
                             width: 48,
@@ -287,10 +284,23 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                 ),
                               ],
                             ),
-                            child: Icon(
-                              Icons.login_rounded,
-                              color: Colors.white,
-                              size: 60,
+                            // child: Icon(
+                            //   Icons.login_rounded,
+                            //   color: Colors.white,
+                            //   size: 60,
+                            // ),
+                            child: Image.asset(
+                              'assets/logo.png', // Replace with your image asset path
+                              height: 80,
+                              width: 80,
+                              errorBuilder: (context, error, stackTrace) {
+                                // Fallback icon if image not found
+                                return const Icon(
+                                  Icons.health_and_safety,
+                                  size: 60,
+                                  color: Colors.white,
+                                );
+                              },
                             ),
                           ),
                           SizedBox(height: 24),
@@ -390,7 +400,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                         decoration: InputDecoration(
                                           hintText: 'Enter your email',
                                           hintStyle: TextStyle(
-                                            color: _textSecondary.withOpacity(0.6),
+                                            color: _textSecondary.withOpacity(
+                                              0.6,
+                                            ),
                                           ),
                                           border: InputBorder.none,
                                           contentPadding: EdgeInsets.symmetric(
@@ -398,7 +410,10 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                             vertical: 18,
                                           ),
                                           prefixIcon: Container(
-                                            margin: EdgeInsets.only(left: 16, right: 12),
+                                            margin: EdgeInsets.only(
+                                              left: 16,
+                                              right: 12,
+                                            ),
                                             child: Icon(
                                               Icons.email_outlined,
                                               color: _primaryColor,
@@ -407,7 +422,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                           ),
                                         ),
                                         validator: _validateEmail,
-                                        keyboardType: TextInputType.emailAddress,
+                                        keyboardType:
+                                            TextInputType.emailAddress,
                                       ),
                                     ),
 
@@ -442,7 +458,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                         decoration: InputDecoration(
                                           hintText: 'Enter your password',
                                           hintStyle: TextStyle(
-                                            color: _textSecondary.withOpacity(0.6),
+                                            color: _textSecondary.withOpacity(
+                                              0.6,
+                                            ),
                                           ),
                                           border: InputBorder.none,
                                           contentPadding: EdgeInsets.symmetric(
@@ -450,7 +468,10 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                             vertical: 18,
                                           ),
                                           prefixIcon: Container(
-                                            margin: EdgeInsets.only(left: 16, right: 12),
+                                            margin: EdgeInsets.only(
+                                              left: 16,
+                                              right: 12,
+                                            ),
                                             child: Icon(
                                               Icons.lock_outline_rounded,
                                               color: _primaryColor,
@@ -462,18 +483,22 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                             child: IconButton(
                                               icon: Icon(
                                                 _obscure
-                                                    ? Icons.visibility_off_rounded
+                                                    ? Icons
+                                                          .visibility_off_rounded
                                                     : Icons.visibility_rounded,
-                                                color: _textSecondary.withOpacity(0.6),
+                                                color: _textSecondary
+                                                    .withOpacity(0.6),
                                                 size: 24,
                                               ),
-                                              onPressed: () =>
-                                                  setState(() => _obscure = !_obscure),
+                                              onPressed: () => setState(
+                                                () => _obscure = !_obscure,
+                                              ),
                                             ),
                                           ),
                                         ),
                                         validator: _validatePassword,
-                                        onFieldSubmitted: (_) => _isLoading ? null : _login(),
+                                        onFieldSubmitted: (_) =>
+                                            _isLoading ? null : _login(),
                                       ),
                                     ),
 
@@ -483,9 +508,13 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                       child: GestureDetector(
                                         onTap: () {
                                           // Add forgot password functionality here
-                                          ScaffoldMessenger.of(context).showSnackBar(
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
                                             SnackBar(
-                                              content: Text('Forgot password feature coming soon'),
+                                              content: Text(
+                                                'Forgot password feature coming soon',
+                                              ),
                                               backgroundColor: _primaryColor,
                                             ),
                                           );
@@ -509,13 +538,18 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(16),
                                         gradient: LinearGradient(
-                                          colors: [_primaryColor, Color(0xFF7A8EFF)],
+                                          colors: [
+                                            _primaryColor,
+                                            Color(0xFF7A8EFF),
+                                          ],
                                           begin: Alignment.topLeft,
                                           end: Alignment.bottomRight,
                                         ),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: _primaryColor.withOpacity(0.3),
+                                            color: _primaryColor.withOpacity(
+                                              0.3,
+                                            ),
                                             blurRadius: 20,
                                             spreadRadius: 0,
                                             offset: Offset(0, 10),
@@ -527,22 +561,31 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                         borderRadius: BorderRadius.circular(16),
                                         child: InkWell(
                                           onTap: _isLoading ? null : _login,
-                                          borderRadius: BorderRadius.circular(16),
-                                          splashColor: Colors.white.withOpacity(0.2),
-                                          highlightColor: Colors.white.withOpacity(0.1),
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
+                                          splashColor: Colors.white.withOpacity(
+                                            0.2,
+                                          ),
+                                          highlightColor: Colors.white
+                                              .withOpacity(0.1),
                                           child: Container(
-                                            padding: EdgeInsets.symmetric(vertical: 20),
+                                            padding: EdgeInsets.symmetric(
+                                              vertical: 20,
+                                            ),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
                                                 if (_isLoading)
                                                   SizedBox(
                                                     width: 24,
                                                     height: 24,
-                                                    child: CircularProgressIndicator(
-                                                      strokeWidth: 2,
-                                                      color: Colors.white,
-                                                    ),
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                          strokeWidth: 2,
+                                                          color: Colors.white,
+                                                        ),
                                                   )
                                                 else
                                                   Icon(
@@ -552,7 +595,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                                   ),
                                                 SizedBox(width: 12),
                                                 Text(
-                                                  _isLoading ? 'LOGGING IN...' : 'LOG IN',
+                                                  _isLoading
+                                                      ? 'LOGGING IN...'
+                                                      : 'LOG IN',
                                                   style: TextStyle(
                                                     fontSize: 17,
                                                     fontWeight: FontWeight.w700,
@@ -579,7 +624,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 16,
+                                          ),
                                           child: Text(
                                             'OR',
                                             style: TextStyle(
@@ -602,7 +649,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
                                     // Sign up redirect
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           "Don't have an account? ",
