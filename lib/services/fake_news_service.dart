@@ -6,7 +6,7 @@ class VerificationService {
   // static const String baseUrl = "http://10.0.2.2:8000";
   // static const String baseUrl = "http://10.245.186.41:8000";
   static const String baseUrl =
-      "https://fakenewsdetection-production-996d.up.railway.app";
+      " https://7b7a-2401-4900-c968-c920-a4eb-ef79-b4b9-c53c.ngrok-free.app";
   static Future<Map<String, dynamic>> verifyStructured(
     Map<String, dynamic> payload,
   ) async {
